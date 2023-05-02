@@ -22,3 +22,25 @@ In order to be able to accomplish this, we require the following packages:
 | snowflake-connector-python | To connect to snowflake |
 | pyyaml | To read tables parameters |
 
+To be able to run this ELT in Docker, it is needed to run the following commands:
+
+1. `docker build -t etl:1.0 .`
+2. `docker run --entrypoint python etl:1.0 main.py --user <username> --password <password> --account <account> --warehouse <warehouse> --file_format <file_format> --database <database> --schema <schema> --table <table> --bucket <bucket> --table_config <table_config>`
+
+The parameters needed in order to be able to run the ETL are:
+
+| Parameter | Description |
+| ---------------| --------------- |
+| `--user` | User to connect to snowflake |
+| `--password` | Password to connect to snowflake |
+| `--account` | Snowflake account |
+| `--warehouse` | Snowflake warehouse |
+| `--file_format` | File format to create the Stage |
+| `--database` | Destination Database |
+| `--schema` | Destination Schema |
+| `--table` | Destination Table |
+| `--bucket` | Bucket URL |
+| `--table_config` | Initial configuration of the table |
+
+
+
