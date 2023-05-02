@@ -1,0 +1,20 @@
+MERGE INTO {{database}}.{{schema}}.{{table}} AS target
+USING (
+  -- subquery to select the data to merge
+  SELECT
+    {% for col, imp in columns|zip(import_data) -%}
+      {{ imp }} AS {{ col -}}{%- if not loop.last %},{% endif %}
+    {% endfor %}
+  FROM {{landing}}.{{schema}}.{{table}}
+) AS source
+ON {% for id in merge_ids %}target.{{id}} = source.{{id}}{% endfor %}
+WHEN MATCHED THEN
+  UPDATE SET
+    {% for col in columns -%}
+      {%- if col not in merge_ids %}
+      target.{{ col }} = source.{{col -}}{%- if not loop.last %},{% endif %}
+      {% endif %}
+    {% endfor %}
+WHEN NOT MATCHED THEN
+  INSERT ({% for col in columns %} {{col}}{% if not loop.last %},{% endif %}{% endfor %})
+  VALUES ({% for col in columns %} source.{{col}}{% if not loop.last %},{% endif %}{% endfor %});

@@ -1,0 +1,16 @@
+tables:
+    door2door:
+        columns:
+            merge_id: "SHA2(CONCAT(FILE:data:id, FILE:at))=VARCHAR"
+            at: "TO_TIMESTAMP(FILE:at::varchar)=TIMESTAMP_NTZ"
+            data_id: "FILE:data:id::varchar=VARCHAR"
+            location_at: "TO_TIMESTAMP(FILE:data:location:at::varchar)=TIMESTAMP_NTZ"
+            finish_time: "TO_TIMESTAMP(FILE:data:location:finish::varchar)=TIMESTAMP_NTZ"
+            start_time: "TO_TIMESTAMP(FILE:data:location:start::varchar)=TIMESTAMP_NTZ"
+            lat: "ST_X(ST_MAKEPOINT(FILE:data:location:lat, FILE:data:location:lng))=DOUBLE"
+            lon: "ST_Y(ST_MAKEPOINT(FILE:data:location:lat, FILE:data:location:lng))=DOUBLE"
+            event: "FILE:event::varchar=VARCHAR"
+            event_on: "FILE:on::varchar=VARCHAR"
+            organization_id: "FILE:organization_id::varchar=VARCHAR"
+        primary_key: 
+            - merge_id
