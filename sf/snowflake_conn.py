@@ -88,6 +88,10 @@ class SnowflakeConnector:
             self._grant_permission(cursor)
 
     def _grant_permission(self, cursor):
+        cursor.execute(f"GRANT USAGE ON DATABASE {self._database} to ROLE READ_ONLY")
+        cursor.execute(f"GRANT USAGE ON DATABASE {self._landing_db} to ROLE READ_ONLY")
+        cursor.execute(f"GRANT USAGE ON SCHEMA {self._database}.{self._schema} to ROLE READ_ONLY")
+        cursor.execute(f"GRANT USAGE ON SCHEMA {self._landing_db}.{self._schema} to ROLE READ_ONLY")
         cursor.execute(f"GRANT SELECT ON ALL TABLES IN SCHEMA {self._database}.{self._schema} to ROLE READ_ONLY")
         cursor.execute(f"GRANT SELECT ON ALL TABLES IN SCHEMA {self._landing_db}.{self._schema} to ROLE READ_ONLY")
 
