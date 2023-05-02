@@ -4,6 +4,11 @@ This is an ELT process, were we have the data located in the bucket s3://de-tech
 
 The link to access to snowflake is: https://ztuuoka-evb05477.snowflakecomputing.com/console/login
 
+Please connect to it with the following credentials:
+
+`user`: lokareader
+`password`: l0k4.US3R
+
 In this ELT, we will follow this process:
 
 1. Connect to snowflake
